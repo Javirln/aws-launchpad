@@ -1,0 +1,22 @@
+FROM python:3.8
+ENV PYTHONUNBUFFERED 1
+ENV DJANGO_SETTINGS_MODULE=config
+ENV DJANGO_CONFIGURATION=Docker
+
+RUN apt-get update && apt-get -y --no-install-recommends install postgresql-client
+
+RUN mkdir /app
+
+WORKDIR /app
+
+COPY backend/requirements.txt /app/
+
+RUN pip install -r requirements.txt
+
+COPY backend/ /app/
+
+ADD backend/entrypoint.sh /entrypoint.sh
+
+ENTRYPOINT ["sh", "/entrypoint.sh"]
+
+EXPOSE 7000

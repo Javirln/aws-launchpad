@@ -1,0 +1,51 @@
+<mat-horizontal-stepper [linear]="true" #stepper>
+  <ng-container *ngIf="isLoading">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </ng-container>
+  <mat-step [stepControl]="credentialsForm">
+    <form (ngSubmit)="handleAWSCredentialsSubmit()" [formGroup]="credentialsForm">
+      <ng-template matStepLabel>Introduce AWS Credentials</ng-template>
+      <mat-form-field>
+        <input matInput placeholder="AWS Client Id" formControlName="clientId" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input type="password" matInput placeholder="AWS Secret Key" formControlName="clientSecret" required>
+      </mat-form-field>
+      <div>
+        <ng-container *ngIf="isLoading; else loadingVM">
+            <mat-spinner diameter="17"></mat-spinner>
+        </ng-container>
+        <ng-template #loadingVM>
+            <button [disabled]="!isCredentialsFormValid" mat-button>Next</button>
+        </ng-template>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>View instance</ng-template>
+    <section class="section-wrapper">
+      <h2>Server information</h2>
+      <div style="display: flex; align-items: center">
+        <span [class]="currentStateColor">{{currentState.Name}}</span>
+        <mat-spinner *ngIf="isLoading" diameter="17"></mat-spinner>
+      </div>
+    </section>
+    <mat-divider></mat-divider>
+    <div class="status-container">
+      <app-status-item [label]="instanceType.label"
+                       [value]="instanceType.value"
+                       [icon]="instanceType.icon"></app-status-item>
+      <app-status-item [label]="diskType.label"
+                       [value]="diskType.value"
+                       [icon]="diskType.icon"></app-status-item>
+      <app-status-item [label]="region.label"
+                       [value]="region.value"
+                       [icon]="region.icon"></app-status-item>
+    </div>
+    <div align="end">
+      <a [disabled]="showActions" [href]="instanceUrl" target="_blank"
+         rel="noopener noreferrer" mat-flat-button>View page</a>
+      <button [disabled]="showActions" (click)="stopServer()" mat-flat-button color="warn">Stop server</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

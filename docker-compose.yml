@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/DockerfileFE
+    ports:
+      - "4200:80"
+    depends_on: 
+      - backend
+
+  backend:
+    build:
+      context: .
+      dockerfile: docker/DockerfileBE
+    command: ["/app/manage.py", "runserver", "0.0.0.0:7000"]
+    environment:
+      - PYTHONDONTWRITEBYTECODE=1
+      - DJANGO_CONFIGURATION=Docker
+      - DJANGO_DATABASE_URL=postgres://postgres:postgres@db/postgres
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:7000"
+    depends_on:
+      - db
