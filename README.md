@@ -81,4 +81,4 @@ you create more instances using the app, additional security groups will be crea
   Although port `22` is open, **no AWS EC2 Key Pair** is created by this application but can be extended.
 - At the time where this project was done, the latest version of Bitnami Wordpress AMI is: `ami-0ec852340933f4f48`
 - Once the instance reaches the status of `Server up and running`, please note that might take a while for the given IP to be
-fully accesible. At first, apart from the current check in place, a ping to the given public IP address was doing until the instance was running, but finally removed since it was not 100% representative. It could have been because of the cache of the OS or even the browser.
+fully accesible. At first, apart from the current check in place, a ping (security ingress was different with the addition to ICMP protocol) to the given public IP address was doing until the instance was running, but finally removed since it was not 100% representative. It could have been because of the cache of the OS or even the browser.
