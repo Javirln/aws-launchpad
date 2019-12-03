@@ -62,7 +62,7 @@ The following assumptions were taken into place:
 
 - Instance type and region by default are `t2.micro` and `eu-west-1` respectively.
 - A security group is created with the name `bitnami-wordpress-sg` is created and attached to the EC2 instance. If by any chance,
-you create more instances using the app, additional security groups will be created with this pattern: `bitnami-wordpress-sg-{uuid4}`
+you create more instances using the app, additional security groups will be created with this pattern: `bitnami-wordpress-sg-{uuid4}`.
 - Default security ingresses attached to the before mentioned security groups are:
   ```
   {'IpProtocol': 'tcp',
@@ -80,3 +80,5 @@ you create more instances using the app, additional security groups will be crea
   ```
   Although port `22` is open, **no AWS EC2 Key Pair** is created by this application but can be extended.
 - At the time where this project was done, the latest version of Bitnami Wordpress AMI is: `ami-0ec852340933f4f48`
+- Once the instance reaches the status of `Server up and running`, please note that might take a while for the given IP to be
+fully accesible.
